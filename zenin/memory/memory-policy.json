@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "scopes": {
+    "session": {
+      "description": "Datos utiles solo mientras la aplicacion esta abierta.",
+      "defaultTtlMs": 0,
+      "persist": false
+    },
+    "shortTerm": {
+      "description": "Senales recientes para detectar cambios de habitos o estado.",
+      "defaultTtlMs": 1209600000,
+      "persist": true
+    },
+    "longTerm": {
+      "description": "Preferencias y patrones estables aprobados por el usuario.",
+      "defaultTtlMs": null,
+      "persist": true,
+      "requiresConsent": true
+    },
+    "contextual": {
+      "description": "Datos temporales usados para una intervencion o conversacion.",
+      "defaultTtlMs": 3600000,
+      "persist": false
+    }
+  },
+  "privacy": {
+    "storeOnlyUsefulData": true,
+    "supportFutureExport": true,
+    "supportFutureDeletion": true,
+    "supportFutureConsentAudit": true
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "achievements": [
+    {
+      "id": "first-breathing",
+      "title": "Primera respiracion",
+      "condition": "tool_completed:action-breathing",
+      "level": "small",
+      "medal": "breath-01",
+      "animation": "achievement.breathing.first",
+      "expression": "proud",
+      "message": "Primera respiracion registrada."
+    },
+    {
+      "id": "seven-days",
+      "title": "7 dias de cuidado",
+      "condition": "active_days_min:7",
+      "level": "small",
+      "medal": "care-07",
+      "animation": "achievement.days.7",
+      "expression": "happy",
+      "message": "Siete dias cuentan."
+    },
+    {
+      "id": "thirty-days",
+      "title": "30 dias de rutina",
+      "condition": "active_days_min:30",
+      "level": "medium",
+      "medal": "care-30",
+      "animation": "achievement.days.30",
+      "expression": "proud",
+      "message": "Treinta dias de cuidado sostenido."
+    },
+    {
+      "id": "hundred-records",
+      "title": "100 registros",
+      "condition": "records_min:100",
+      "level": "major",
+      "medal": "records-100",
+      "animation": "achievement.records.100",
+      "expression": "celebrating",
+      "message": "Cien registros construyen una historia clara."
+    },
+    {
+      "id": "first-goal",
+      "title": "Primera meta",
+      "condition": "goal_completed_first:true",
+      "level": "medium",
+      "medal": "goal-01",
+      "animation": "achievement.goal.first",
+      "expression": "celebrating",
+      "message": "Primera meta cumplida."
+    },
+    {
+      "id": "five-habits",
+      "title": "Cinco habitos",
+      "condition": "habits_min:5",
+      "level": "medium",
+      "medal": "habits-05",
+      "animation": "achievement.habits.5",
+      "expression": "proud",
+      "message": "Cinco habitos ya forman una base."
+    },
+    {
+      "id": "better-sleep",
+      "title": "Dormir mejor",
+      "condition": "sleep_improved:true",
+      "level": "small",
+      "medal": "sleep-up",
+      "animation": "achievement.sleep.better",
+      "expression": "happy",
+      "message": "Tu descanso muestra mejora."
+    },
+    {
+      "id": "stress-reduced",
+      "title": "Estres reducido",
+      "condition": "stress_reduced:true",
+      "level": "small",
+      "medal": "stress-down",
+      "animation": "achievement.stress.reduced",
+      "expression": "proud",
+      "message": "El estres reciente parece bajar."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "animations": [
+    { "key": "avatar.idle", "label": "Idle", "renderer": "css-fallback", "loop": true },
+    { "key": "avatar.enter", "label": "Entrada", "renderer": "rive", "loop": false },
+    { "key": "avatar.exit", "label": "Salida", "renderer": "rive", "loop": false },
+    { "key": "avatar.walk", "label": "Caminar", "renderer": "rive", "loop": true },
+    { "key": "avatar.float", "label": "Flotar", "renderer": "css-fallback", "loop": true },
+    { "key": "avatar.celebrate", "label": "Celebrar", "renderer": "lottie", "loop": false },
+    { "key": "avatar.applaud", "label": "Aplaudir", "renderer": "rive", "loop": false },
+    { "key": "avatar.greet", "label": "Saludar", "renderer": "rive", "loop": false },
+    { "key": "avatar.sleep", "label": "Dormir", "renderer": "css-fallback", "loop": true },
+    { "key": "avatar.think", "label": "Pensar", "renderer": "lottie", "loop": true },
+    { "key": "avatar.listen", "label": "Escuchar", "renderer": "rive", "loop": true },
+    { "key": "avatar.talk", "label": "Hablar", "renderer": "rive", "loop": true },
+    { "key": "avatar.concern", "label": "Preocuparse", "renderer": "lottie", "loop": true },
+    { "key": "avatar.happy", "label": "Feliz", "renderer": "lottie", "loop": true },
+    { "key": "avatar.curious", "label": "Curioso", "renderer": "rive", "loop": true },
+    { "key": "avatar.wait", "label": "Esperando", "renderer": "css-fallback", "loop": true },
+    { "key": "avatar.transition.soft", "label": "Transicion suave", "renderer": "css-fallback", "loop": false }
+  ],
+  "transitionPolicy": {
+    "defaultDurationMs": 360,
+    "crossFade": true,
+    "respectReducedMotion": true
+  }
+}

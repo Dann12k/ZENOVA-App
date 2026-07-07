@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "catalog": [
+    {
+      "id": "tool.breathing",
+      "kind": "tool",
+      "match": ["stress-high", "sleep-low", "calm-needed"],
+      "priority": 70
+    },
+    {
+      "id": "tool.grounding",
+      "kind": "tool",
+      "match": ["anxiety", "overthinking", "present-focus"],
+      "priority": 68
+    },
+    {
+      "id": "tool.movement",
+      "kind": "tool",
+      "match": ["fatigue", "body-tension", "study-break"],
+      "priority": 60
+    },
+    {
+      "id": "resource.academic-stress",
+      "kind": "resource",
+      "match": ["academic-stress"],
+      "priority": 58
+    }
+  ]
+}

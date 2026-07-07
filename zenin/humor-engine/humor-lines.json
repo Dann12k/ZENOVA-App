@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "cooldownMs": 86400000,
+  "rules": {
+    "avoidHighStress": true,
+    "avoidCareSignals": true,
+    "maxUsesPerWeek": 2
+  },
+  "templates": [
+    "Hoy ganaste una pequena batalla",
+    "Tu respiracion ya tiene club de fans",
+    "Has vencido otra mision tranquila",
+    "Ese avance merece una luz dorada",
+    "Tu constancia acaba de saludar",
+    "Punto para tu version calmada",
+    "Eso fue pequeno, pero poderoso",
+    "Tu pausa acaba de hacer historia",
+    "Otra mini victoria para el dia",
+    "Tu rutina esta despertando bonito",
+    "Buen movimiento, sin hacer ruido",
+    "Tu yo futuro acaba de agradecer",
+    "Esto cuenta mas de lo que parece",
+    "Has desbloqueado un minuto amable",
+    "Hoy tu calma tuvo buena punteria",
+    "Esa decision tuvo estilo tranquilo",
+    "Tu energia encontro un mejor lugar",
+    "Respirar asi merece aplauso silencioso",
+    "La calma acaba de sumar puntos",
+    "Ese paso fue muy de protagonista"
+  ],
+  "modifiers": [
+    ".",
+    ", sin presion.",
+    ", paso a paso.",
+    ", con calma.",
+    ", y eso vale.",
+    ", muy bien llevado.",
+    ", sin exagerar.",
+    ", a tu ritmo.",
+    ", nada mal.",
+    ", pequeno pero real.",
+    ", y ZENIN tomo nota.",
+    ", con energia suave."
+  ]
+}

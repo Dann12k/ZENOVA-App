@@ -1,0 +1,8 @@
+{
+  "key": "avatar.float",
+  "states": ["floating", "listening", "waiting"],
+  "renderer": "css-fallback",
+  "futureFormats": ["rive", "lottie", "spine"],
+  "durationRangeMs": [3000, 8000],
+  "loop": true
+}

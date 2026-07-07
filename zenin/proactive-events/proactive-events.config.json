@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "id": "absence-7-days",
+      "condition": "inactive_days_min:7",
+      "animation": "proactive.return.soft",
+      "message": "Volviste. Podemos retomar con algo pequeno.",
+      "expression": "warm",
+      "farewell": "Estoy cerca si quieres seguir."
+    },
+    {
+      "id": "habits-30-days",
+      "condition": "habit_days_min:30",
+      "animation": "proactive.habit.glow",
+      "message": "Treinta dias construyen mas de lo que parece.",
+      "expression": "proud",
+      "farewell": "Buen ritmo."
+    },
+    {
+      "id": "first-goal-completed",
+      "condition": "goal_completed_first:true",
+      "animation": "proactive.goal.confetti",
+      "message": "Primer objetivo cumplido. Esto merece una pausa para reconocerlo.",
+      "expression": "celebrating",
+      "farewell": "Lo hiciste paso a paso."
+    },
+    {
+      "id": "best-week",
+      "condition": "best_week:true",
+      "animation": "proactive.best-week.light",
+      "message": "Esta parece ser una de tus mejores semanas.",
+      "expression": "happy",
+      "farewell": "Sigamos cuidando el ritmo."
+    },
+    {
+      "id": "important-change",
+      "condition": "important_change:true",
+      "animation": "proactive.change.thoughtful",
+      "message": "He notado un cambio importante.",
+      "expression": "thoughtful",
+      "farewell": "Podemos revisarlo con calma."
+    }
+  ]
+}

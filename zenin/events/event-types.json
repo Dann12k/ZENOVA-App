@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "events": [
+    "auth.login",
+    "auth.logout",
+    "tool.started",
+    "tool.completed",
+    "goal.created",
+    "goal.progress",
+    "habit.created",
+    "habit.updated",
+    "habit.completed",
+    "emotion.logged",
+    "journal.created",
+    "settings.updated",
+    "calendar.activity.created",
+    "calendar.activity.completed",
+    "zenin.intervention.queued",
+    "zenin.intervention.dismissed",
+    "zenin.memory.updated",
+    "zenin.emotion.changed",
+    "zenin.presence.shown",
+    "zenin.presence.skipped",
+    "zenin.care.signal",
+    "zenin.behavior.selected",
+    "zenin.celebration.created",
+    "zenin.notification.ignored",
+    "zenin.routine.detected",
+    "zenin.proactive-event.created",
+    "achievement.unlocked"
+  ]
+}

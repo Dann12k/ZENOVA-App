@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "states": {
+    "calm": {
+      "label": "Calmado",
+      "animation": "emotion.calm.float",
+      "expression": "calm",
+      "movements": ["slow-breathe", "soft-float"],
+      "speed": 0.32,
+      "luminosity": 0.48,
+      "eyeColor": "gold-soft",
+      "glowIntensity": 0.34
+    },
+    "happy": {
+      "label": "Feliz",
+      "animation": "emotion.happy.bounce",
+      "expression": "warm",
+      "movements": ["small-bounce", "spark"],
+      "speed": 0.58,
+      "luminosity": 0.68,
+      "eyeColor": "gold",
+      "glowIntensity": 0.58
+    },
+    "curious": {
+      "label": "Curioso",
+      "animation": "emotion.curious.tilt",
+      "expression": "curious",
+      "movements": ["head-tilt", "orb-pulse"],
+      "speed": 0.46,
+      "luminosity": 0.54,
+      "eyeColor": "violet",
+      "glowIntensity": 0.46
+    },
+    "proud": {
+      "label": "Orgulloso",
+      "animation": "emotion.proud.glow",
+      "expression": "proud",
+      "movements": ["upright", "warm-glow"],
+      "speed": 0.5,
+      "luminosity": 0.74,
+      "eyeColor": "gold-strong",
+      "glowIntensity": 0.72
+    },
+    "surprised": {
+      "label": "Sorprendido",
+      "animation": "emotion.surprised.pop",
+      "expression": "surprised",
+      "movements": ["quick-pop", "blink"],
+      "speed": 0.76,
+      "luminosity": 0.62,
+      "eyeColor": "violet-bright",
+      "glowIntensity": 0.52
+    },
+    "concerned": {
+      "label": "Preocupado",
+      "animation": "emotion.concerned.slow",
+      "expression": "concerned",
+      "movements": ["slow-pulse", "lowered-posture"],
+      "speed": 0.24,
+      "luminosity": 0.36,
+      "eyeColor": "violet-soft",
+      "glowIntensity": 0.28
+    },
+    "thoughtful": {
+      "label": "Pensativo",
+      "animation": "emotion.thoughtful.orbit",
+      "expression": "reflective",
+      "movements": ["slow-orbit", "micro-pulse"],
+      "speed": 0.36,
+      "luminosity": 0.5,
+      "eyeColor": "purple-gold",
+      "glowIntensity": 0.42
+    },
+    "motivated": {
+      "label": "Motivado",
+      "animation": "emotion.motivated.forward",
+      "expression": "focused",
+      "movements": ["lean-forward", "spark-line"],
+      "speed": 0.64,
+      "luminosity": 0.7,
+      "eyeColor": "gold",
+      "glowIntensity": 0.62
+    },
+    "celebrating": {
+      "label": "Celebrando",
+      "animation": "emotion.celebrating.confetti",
+      "expression": "celebrating",
+      "movements": ["applause", "confetti-ready"],
+      "speed": 0.82,
+      "luminosity": 0.86,
+      "eyeColor": "gold-strong",
+      "glowIntensity": 0.88
+    },
+    "waiting": {
+      "label": "Esperando",
+      "animation": "emotion.waiting.idle",
+      "expression": "neutral",
+      "movements": ["idle", "soft-breathe"],
+      "speed": 0.28,
+      "luminosity": 0.42,
+      "eyeColor": "gold-soft",
+      "glowIntensity": 0.32
+    },
+    "sleeping": {
+      "label": "Dormido",
+      "animation": "emotion.sleeping.dim",
+      "expression": "sleeping",
+      "movements": ["dim", "slow-breathe"],
+      "speed": 0.12,
+      "luminosity": 0.18,
+      "eyeColor": "dim-gold",
+      "glowIntensity": 0.12
+    },
+    "listening": {
+      "label": "Escuchando",
+      "animation": "emotion.listening.attentive",
+      "expression": "warm",
+      "movements": ["attentive", "micro-nod"],
+      "speed": 0.4,
+      "luminosity": 0.52,
+      "eyeColor": "gold-soft",
+      "glowIntensity": 0.4
+    },
+    "analyzing": {
+      "label": "Analizando",
+      "animation": "emotion.analyzing.pulse",
+      "expression": "focused",
+      "movements": ["orbit", "scan-line"],
+      "speed": 0.52,
+      "luminosity": 0.56,
+      "eyeColor": "violet",
+      "glowIntensity": 0.5
+    },
+    "empathetic": {
+      "label": "Empatico",
+      "animation": "emotion.empathetic.warm",
+      "expression": "empathetic",
+      "movements": ["soft-approach", "warm-pulse"],
+      "speed": 0.3,
+      "luminosity": 0.5,
+      "eyeColor": "gold-soft",
+      "glowIntensity": 0.48
+    }
+  }
+}

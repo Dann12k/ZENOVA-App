@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "initialState": "inactive",
+  "states": {
+    "inactive": {
+      "animationKey": "avatar.idle.hidden",
+      "tone": "silent",
+      "interventionFrequency": "none",
+      "priority": 0,
+      "maxDurationMs": null,
+      "allowedTransitions": ["observing", "greeting"]
+    },
+    "observing": {
+      "animationKey": "avatar.observe.soft",
+      "tone": "silent",
+      "interventionFrequency": "very-low",
+      "priority": 10,
+      "maxDurationMs": 300000,
+      "allowedTransitions": ["analyzing", "waiting", "inactive"]
+    },
+    "analyzing": {
+      "animationKey": "avatar.thinking.pulse",
+      "tone": "silent",
+      "interventionFrequency": "none",
+      "priority": 20,
+      "maxDurationMs": 30000,
+      "allowedTransitions": ["waiting", "suggesting", "remembering", "celebrating"]
+    },
+    "waiting": {
+      "animationKey": "avatar.waiting.breathe",
+      "tone": "calm",
+      "interventionFrequency": "low",
+      "priority": 15,
+      "maxDurationMs": 600000,
+      "allowedTransitions": ["observing", "greeting", "listening", "suggesting", "inactive"]
+    },
+    "greeting": {
+      "animationKey": "avatar.greeting.soft-wave",
+      "tone": "warm",
+      "interventionFrequency": "low",
+      "priority": 40,
+      "maxDurationMs": 12000,
+      "allowedTransitions": ["listening", "waiting", "farewell"]
+    },
+    "listening": {
+      "animationKey": "avatar.listening.attentive",
+      "tone": "attentive",
+      "interventionFrequency": "user-led",
+      "priority": 50,
+      "maxDurationMs": 300000,
+      "allowedTransitions": ["conversing", "reflecting", "waiting", "farewell"]
+    },
+    "conversing": {
+      "animationKey": "avatar.conversing.subtle",
+      "tone": "supportive",
+      "interventionFrequency": "user-led",
+      "priority": 55,
+      "maxDurationMs": 600000,
+      "allowedTransitions": ["listening", "reflecting", "suggesting", "farewell"]
+    },
+    "motivating": {
+      "animationKey": "avatar.motivate.spark",
+      "tone": "encouraging",
+      "interventionFrequency": "low",
+      "priority": 45,
+      "maxDurationMs": 20000,
+      "allowedTransitions": ["waiting", "suggesting", "farewell"]
+    },
+    "celebrating": {
+      "animationKey": "avatar.celebrate.glow",
+      "tone": "positive",
+      "interventionFrequency": "low",
+      "priority": 65,
+      "maxDurationMs": 12000,
+      "allowedTransitions": ["waiting", "motivating", "farewell"]
+    },
+    "reflecting": {
+      "animationKey": "avatar.reflecting.float",
+      "tone": "thoughtful",
+      "interventionFrequency": "user-led",
+      "priority": 45,
+      "maxDurationMs": 45000,
+      "allowedTransitions": ["listening", "conversing", "suggesting", "waiting"]
+    },
+    "suggesting": {
+      "animationKey": "avatar.suggesting.card",
+      "tone": "gentle",
+      "interventionFrequency": "limited",
+      "priority": 60,
+      "maxDurationMs": 30000,
+      "allowedTransitions": ["waiting", "listening", "farewell"]
+    },
+    "remembering": {
+      "animationKey": "avatar.memory.soft-loop",
+      "tone": "silent",
+      "interventionFrequency": "none",
+      "priority": 25,
+      "maxDurationMs": 15000,
+      "allowedTransitions": ["waiting", "observing"]
+    },
+    "farewell": {
+      "animationKey": "avatar.farewell.fade",
+      "tone": "warm",
+      "interventionFrequency": "none",
+      "priority": 35,
+      "maxDurationMs": 10000,
+      "allowedTransitions": ["inactive", "observing"]
+    }
+  }
+}

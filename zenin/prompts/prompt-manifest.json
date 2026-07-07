@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "activePrompts": [],
+  "rules": {
+    "noActiveAIIntegration": true,
+    "useOnlySynthesizedContext": true,
+    "includeSafetyBoundaries": true,
+    "includePersonalityConfig": true,
+    "avoidRawUserHistory": true
+  },
+  "futurePromptTypes": [
+    "system-identity",
+    "context-summary",
+    "intervention-explanation",
+    "conversation-response",
+    "recommendation-rationale"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "defaultTheme": "zenova-premium",
+  "visualIdentity": {
+    "primary": "gold",
+    "secondary": "purple",
+    "surface": "dark-glass"
+  },
+  "supportedRenderers": ["lottie", "rive", "css-fallback"],
+  "expressions": ["neutral", "calm", "warm", "focused", "celebrating", "reflective"],
+  "postures": ["idle", "observing", "listening", "suggesting", "celebrating", "leaving"],
+  "visibilityPolicy": {
+    "defaultVisible": false,
+    "allowSoftEntrance": true,
+    "allowSoftExit": true,
+    "neverCoverPrimaryActions": true
+  }
+}

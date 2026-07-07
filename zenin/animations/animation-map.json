@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "states": {
+    "inactive": {
+      "animationKey": "avatar.idle.hidden",
+      "renderer": "css-fallback",
+      "visible": false,
+      "expression": "neutral",
+      "posture": "idle",
+      "accessibilityLabel": "ZENIN inactivo"
+    },
+    "observing": {
+      "animationKey": "avatar.observe.soft",
+      "renderer": "lottie",
+      "visible": false,
+      "expression": "focused",
+      "posture": "observing",
+      "accessibilityLabel": "ZENIN observando sin intervenir"
+    },
+    "analyzing": {
+      "animationKey": "avatar.thinking.pulse",
+      "renderer": "lottie",
+      "visible": false,
+      "expression": "focused",
+      "posture": "observing",
+      "accessibilityLabel": "ZENIN analizando contexto"
+    },
+    "waiting": {
+      "animationKey": "avatar.waiting.breathe",
+      "renderer": "css-fallback",
+      "visible": false,
+      "expression": "calm",
+      "posture": "idle",
+      "accessibilityLabel": "ZENIN esperando"
+    },
+    "greeting": {
+      "animationKey": "avatar.greeting.soft-wave",
+      "renderer": "rive",
+      "visible": true,
+      "expression": "warm",
+      "posture": "listening",
+      "accessibilityLabel": "ZENIN saludando"
+    },
+    "listening": {
+      "animationKey": "avatar.listening.attentive",
+      "renderer": "rive",
+      "visible": true,
+      "expression": "warm",
+      "posture": "listening",
+      "accessibilityLabel": "ZENIN escuchando"
+    },
+    "conversing": {
+      "animationKey": "avatar.conversing.subtle",
+      "renderer": "rive",
+      "visible": true,
+      "expression": "warm",
+      "posture": "listening",
+      "accessibilityLabel": "ZENIN conversando"
+    },
+    "motivating": {
+      "animationKey": "avatar.motivate.spark",
+      "renderer": "lottie",
+      "visible": true,
+      "expression": "warm",
+      "posture": "suggesting",
+      "accessibilityLabel": "ZENIN motivando"
+    },
+    "celebrating": {
+      "animationKey": "avatar.celebrate.glow",
+      "renderer": "lottie",
+      "visible": true,
+      "expression": "celebrating",
+      "posture": "celebrating",
+      "accessibilityLabel": "ZENIN celebrando un logro"
+    },
+    "reflecting": {
+      "animationKey": "avatar.reflecting.float",
+      "renderer": "css-fallback",
+      "visible": true,
+      "expression": "reflective",
+      "posture": "observing",
+      "accessibilityLabel": "ZENIN reflexionando"
+    },
+    "suggesting": {
+      "animationKey": "avatar.suggesting.card",
+      "renderer": "rive",
+      "visible": true,
+      "expression": "focused",
+      "posture": "suggesting",
+      "accessibilityLabel": "ZENIN sugiriendo"
+    },
+    "remembering": {
+      "animationKey": "avatar.memory.soft-loop",
+      "renderer": "lottie",
+      "visible": false,
+      "expression": "reflective",
+      "posture": "observing",
+      "accessibilityLabel": "ZENIN actualizando memoria"
+    },
+    "farewell": {
+      "animationKey": "avatar.farewell.fade",
+      "renderer": "rive",
+      "visible": true,
+      "expression": "calm",
+      "posture": "leaving",
+      "accessibilityLabel": "ZENIN despidiendose"
+    }
+  }
+}

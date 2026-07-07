@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "cooldownDefaultsMs": {
+    "low": 21600000,
+    "normal": 10800000,
+    "high": 3600000
+  },
+  "rules": [
+    {
+      "id": "tool-completed-celebration",
+      "enabled": true,
+      "eventType": "tool.completed",
+      "priority": 60,
+      "interventionType": "celebration",
+      "reason": "El usuario completo una herramienta y puede recibir reconocimiento breve.",
+      "cooldownMs": 7200000
+    },
+    {
+      "id": "positive-progress",
+      "enabled": true,
+      "condition": { "type": "goal_progress_min", "value": 80 },
+      "priority": 55,
+      "interventionType": "motivation",
+      "reason": "Existe progreso alto en un objetivo.",
+      "cooldownMs": 21600000
+    },
+    {
+      "id": "mood-drop-watch",
+      "enabled": true,
+      "condition": { "type": "emotional_trend", "value": "declining" },
+      "priority": 70,
+      "interventionType": "gentle-suggestion",
+      "reason": "El estado emocional reciente parece descender y conviene sugerir apoyo no invasivo.",
+      "cooldownMs": 43200000
+    }
+  ]
+}

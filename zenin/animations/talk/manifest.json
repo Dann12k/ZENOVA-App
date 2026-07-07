@@ -1,0 +1,8 @@
+{
+  "key": "avatar.talk",
+  "states": ["talking", "speaking", "conversing"],
+  "renderer": "css-fallback",
+  "futureFormats": ["rive", "lottie", "spine"],
+  "durationRangeMs": [3000, 8000],
+  "loop": true
+}
