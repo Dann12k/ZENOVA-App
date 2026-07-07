@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="es" class="auth-pending">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZENOVA | Bienestar emocional</title>
+    <meta
+      name="description"
+      content="ZENOVA ayuda a gestionar el estrés de manera personalizada, accesible e inmediata desde una sola plataforma."
+    />
+    <link rel="icon" href="assets/logo-zenova.png" />
+    <style>
+      html,
+      body {
+        background: #05040b;
+      }
+
+      html.auth-pending,
+      html.auth-pending body {
+        min-height: 100%;
+        overflow: hidden;
+      }
+
+      html.auth-pending body {
+        visibility: hidden;
+      }
+
+      html.session-valid #authModal,
+      html.session-valid #welcomeCinematic:not(.is-playing),
+      html.session-missing [data-protected-shell] {
+        display: none !important;
+      }
+
+      html.session-missing #authModal {
+        display: grid;
+      }
+    </style>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var hasSession = false;
+        try {
+          if ("scrollRestoration" in history) {
+            history.scrollRestoration = "manual";
+          }
+          window.scrollTo(0, 0);
+        } catch (error) {}
+        try {
+          var session = JSON.parse(localStorage.getItem("zenovaSession") || "null");
+          hasSession = Boolean(session && (session.email || session.name || session.guest));
+        } catch (error) {
+          hasSession = false;
+        }
+        root.classList.remove("auth-pending");
+        root.classList.add(hasSession ? "session-valid" : "session-missing");
+      })();
+    </script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-protected-shell hidden inert>
+      <a class="brand" href="#panel" aria-label="Ir al panel ZENOVA">
+        <img src="assets/logo-zenova.png" alt="Logo de ZENOVA" />
+        <span>ZENOVA</span>
+      </a>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="#panel" data-i18n="nav.home">Inicio</a>
+        <a href="#herramientas" data-workspace-panel="actions" data-i18n="nav.tools">Herramientas</a>
+        <a href="#progreso" data-workspace-panel="stats" data-i18n="nav.progress">Progreso</a>
+        <a href="#biblioteca" data-workspace-panel="library" data-i18n="nav.resources">Recursos</a>
+        <a href="#plan-personal" data-workspace-panel="profile" data-i18n="nav.profile">Perfil</a>
+      </nav>
+      <div class="header-actions">
+        <label class="language-control" for="languageSelect">
+          <span data-i18n="language.label">Idioma</span>
+          <select id="languageSelect">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+            <option value="pt">PT</option>
+          </select>
+        </label>
+        <button class="theme-button auth-button" id="authOpenBtn" type="button" data-i18n="auth.login">
+          Iniciar sesión
+        </button>
+        <button class="theme-button" id="optionsOpenBtn" type="button" data-i18n="options.open">Opciones</button>
+        <button class="theme-button hidden" id="logoutBtn" type="button" data-i18n="auth.logout">Salir</button>
+        <button class="theme-button" id="focusModeBtn" type="button" data-i18n="mode.calm">Modo calma</button>
+      </div>
+    </header>
+
+    <button class="floating-options" id="floatingOptionsBtn" type="button" aria-label="Abrir opciones" data-protected-shell hidden inert>
+      ⚙
+    </button>
+
+    <section class="auth-modal" id="authModal" aria-labelledby="auth-title" aria-modal="true">
+      <div class="auth-ambient" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="auth-panel">
+        <div class="auth-visual">
+          <div class="auth-brand-lockup">
+            <img src="assets/logo-zenova.png" alt="Logo de ZENOVA" />
+            <span>ZENOVA</span>
+          </div>
+          <h1 data-i18n="auth.heroTitle">Bienestar emocional con una experiencia premium.</h1>
+          <p data-i18n="auth.visual">Accede a tu espacio personal de bienestar.</p>
+          <div class="auth-highlights" aria-label="Beneficios de ZENOVA">
+            <span data-i18n="auth.highlight1">Seguimiento emocional</span>
+            <span data-i18n="auth.highlight2">ZENIN personalizado</span>
+            <span data-i18n="auth.highlight3">Rutinas antiestrés</span>
+          </div>
+        </div>
+        <div class="auth-forms">
+          <div class="auth-tabs" role="tablist" aria-label="Ingreso y registro">
+            <button class="auth-tab active" id="loginTab" type="button" data-panel="loginPanel" data-i18n="auth.login">
+              Iniciar sesión
+            </button>
+            <button
+              class="auth-tab"
+              id="registerTab"
+              type="button"
+              data-panel="registerPanel"
+              data-i18n="auth.register"
+            >
+              Registrarme
+            </button>
+          </div>
+
+          <form class="auth-form active" id="loginPanel">
+            <h2 id="auth-title" data-i18n="auth.loginTitle">Bienvenido de nuevo</h2>
+            <label>
+              <span data-i18n="auth.email">Correo</span>
+              <input id="loginEmail" type="email" autocomplete="email" required placeholder="zenova@email.com" />
+            </label>
+            <label>
+              <span data-i18n="auth.password">Contraseña</span>
+              <input id="loginPassword" type="password" autocomplete="current-password" required minlength="4" />
+            </label>
+            <button class="forgot-link" id="forgotPasswordBtn" type="button" data-i18n="recovery.forgot">
+              ¿Olvidaste tu contraseña?
+            </button>
+            <button class="primary-action full" type="submit" data-i18n="auth.enter">Entrar</button>
+          </form>
+
+          <form class="auth-form" id="registerPanel">
+            <h2 data-i18n="auth.registerTitle">Crea tu cuenta</h2>
+            <label>
+              <span data-i18n="auth.name">Nombre</span>
+              <input id="registerName" type="text" autocomplete="name" required placeholder="Tu nombre" />
+            </label>
+            <label>
+              <span data-i18n="auth.email">Correo</span>
+              <input id="registerEmail" type="email" autocomplete="email" required placeholder="zenova@email.com" />
+            </label>
+            <label>
+              <span data-i18n="auth.password">Contraseña</span>
+              <input id="registerPassword" type="password" autocomplete="new-password" required minlength="4" />
+            </label>
+            <button class="primary-action full" type="submit" data-i18n="auth.create">Crear cuenta</button>
+          </form>
+
+          <div class="auth-form recovery-panel" id="recoveryPanel" aria-live="polite">
+            <button class="recovery-back" id="recoveryBackBtn" type="button" data-i18n="recovery.back">
+              Volver al inicio de sesión
+            </button>
+
+            <section class="recovery-step active" data-recovery-step="email">
+              <h2 data-i18n="recovery.title">Recuperar contraseña</h2>
+              <p data-i18n="recovery.emailText">
+                Ingresa tu correo. Si está registrado, recibirás un código de recuperación.
+              </p>
+              <form id="recoveryEmailForm">
+                <label>
+                  <span data-i18n="auth.email">Correo</span>
+                  <input id="recoveryEmail" type="email" autocomplete="email" required placeholder="zenova@email.com" />
+                </label>
+                <button class="primary-action full" type="submit" data-i18n="recovery.sendCode">
+                  Enviar código de recuperación
+                </button>
+              </form>
+            </section>
+
+            <section class="recovery-step" data-recovery-step="code">
+              <h2 data-i18n="recovery.codeTitle">Verifica tu código</h2>
+              <p data-i18n="recovery.codeText">
+                Escribe los 6 dígitos enviados al correo. El código vence en 10 minutos.
+              </p>
+              <form id="recoveryCodeForm">
+                <div class="otp-grid" id="otpGrid" aria-label="Código de recuperación">
+                  <input class="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="1" />
+                  <input class="otp-input" type="text" inputmode="numeric" maxlength="1" />
+                  <input class="otp-input" type="text" inputmode="numeric" maxlength="1" />
+                  <input class="otp-input" type="text" inputmode="numeric" maxlength="1" />
+                  <input class="otp-input" type="text" inputmode="numeric" maxlength="1" />
+                  <input class="otp-input" type="text" inputmode="numeric" maxlength="1" />
+                </div>
+                <div class="recovery-meta">
+                  <span id="recoveryTimer">10:00</span>
+                  <button class="recovery-resend" id="recoveryResendBtn" type="button" disabled data-i18n="recovery.resend">
+                    Reenviar código
+                  </button>
+                </div>
+                <button class="primary-action full" type="submit" data-i18n="recovery.verify">
+                  Verificar código
+                </button>
+              </form>
+              <details class="recovery-email-preview hidden" id="recoveryEmailPreview">
+                <summary data-i18n="recovery.preview">Ver correo de prueba</summary>
+                <div id="recoveryEmailHtml"></div>
+              </details>
+            </section>
+
+            <section class="recovery-step" data-recovery-step="password">
+              <h2 data-i18n="recovery.newPasswordTitle">Crea una nueva contraseña</h2>
+              <p data-i18n="recovery.newPasswordText">
+                Usa una contraseña segura con mayúscula, número y carácter especial.
+              </p>
+              <form id="recoveryPasswordForm">
+                <label>
+                  <span data-i18n="recovery.newPassword">Nueva contraseña</span>
+                  <div class="password-shell">
+                    <input id="newRecoveryPassword" type="password" autocomplete="new-password" required minlength="8" />
+                    <button class="password-toggle" type="button" data-password-toggle="newRecoveryPassword" data-i18n="recovery.show">
+                      Mostrar
+                    </button>
+                  </div>
+                </label>
+                <div class="strength-meter" aria-live="polite">
+                  <span id="strengthFill"></span>
+                  <small id="strengthText">Seguridad baja</small>
+                </div>
+                <label>
+                  <span data-i18n="recovery.confirmPassword">Confirmar contraseña</span>
+                  <div class="password-shell">
+                    <input id="confirmRecoveryPassword" type="password" autocomplete="new-password" required minlength="8" />
+                    <button class="password-toggle" type="button" data-password-toggle="confirmRecoveryPassword" data-i18n="recovery.show">
+                      Mostrar
+                    </button>
+                  </div>
+                </label>
+                <ul class="password-rules" id="passwordRules">
+                  <li data-rule="length" data-i18n="recovery.ruleLength">Mínimo 8 caracteres</li>
+                  <li data-rule="upper" data-i18n="recovery.ruleUpper">Al menos una mayúscula</li>
+                  <li data-rule="number" data-i18n="recovery.ruleNumber">Al menos un número</li>
+                  <li data-rule="special" data-i18n="recovery.ruleSpecial">Al menos un carácter especial</li>
+                </ul>
+                <button class="primary-action full" type="submit" data-i18n="recovery.updatePassword">
+                  Actualizar contraseña
+                </button>
+              </form>
+            </section>
+
+            <section class="recovery-step" data-recovery-step="success">
+              <h2 data-i18n="recovery.successTitle">Contraseña actualizada</h2>
+              <p data-i18n="recovery.successText">
+                Tu contraseña fue actualizada. En unos segundos volverás al inicio de sesión.
+              </p>
+            </section>
+          </div>
+
+          <button class="guest-link" id="guestBtn" type="button" data-i18n="auth.guest">Continuar como invitado</button>
+          <p class="auth-message" id="authMessage" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="welcome-cinematic" id="welcomeCinematic" aria-live="polite" data-zenin-cinematic>
+      <div class="cinematic-motion-field" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+      <button class="zenin-skip-button" id="cinematicSkipBtn" type="button">Omitir</button>
+      <div class="cinematic-scene">
+        <img class="cinematic-logo" src="assets/logo-zenova.png" alt="Logo ZENOVA" />
+        <div class="zenin-live-avatar zenin-live-avatar--cinematic" data-zenin-avatar data-zenin-state="greeting" data-zenin-expression="happy" data-zenin-entrance="from-right" role="img" aria-label="ZENIN saludando">
+          <div class="zenin-avatar-aura" aria-hidden="true"></div>
+          <div class="zenin-avatar-particles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="zenin-avatar-hologram" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="zenin-avatar-antenna" aria-hidden="true"><i></i></div>
+          <div class="zenin-avatar-head">
+            <div class="zenin-avatar-face">
+              <span class="zenin-eye zenin-eye--left"></span>
+              <span class="zenin-eye zenin-eye--right"></span>
+              <span class="zenin-mouth"></span>
+            </div>
+          </div>
+          <div class="zenin-avatar-body">
+            <span class="zenin-core"></span>
+            <span class="zenin-arm zenin-arm--left"></span>
+            <span class="zenin-arm zenin-arm--right"></span>
+            <span class="zenin-foot zenin-foot--left"></span>
+            <span class="zenin-foot zenin-foot--right"></span>
+          </div>
+        </div>
+        <div class="cinematic-bubble zenin-speech-bubble" data-zenin-bubble>
+          <strong>ZENIN</strong>
+          <p id="cinematicText">Preparando tu espacio de calma...</p>
+          <span class="zenin-type-cursor" aria-hidden="true"></span>
+        </div>
+        <div class="cinematic-track">
+          <span></span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="options-drawer" id="optionsDrawer" aria-label="Opciones ZENOVA" data-protected-shell hidden inert>
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow" data-i18n="options.eyebrow">Centro personal</p>
+          <h2 data-i18n="options.title">Opciones ZENOVA</h2>
+        </div>
+        <button class="icon-button" id="optionsCloseBtn" type="button" aria-label="Cerrar">×</button>
+      </div>
+
+      <div class="option-panel">
+        <label>
+          <span data-i18n="options.language">Idioma</span>
+          <select id="drawerLanguageSelect">
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="pt">Português</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="options.theme">Apariencia</span>
+          <select id="themeSelect">
+            <option value="dark" data-i18n="options.dark">Modo oscuro</option>
+            <option value="light" data-i18n="options.light">Modo claro</option>
+          </select>
+        </label>
+        <label>
+          <span data-i18n="options.sound">Sonido suave</span>
+          <select id="soundSelect">
+            <option value="off" data-i18n="options.soundOff">Silencio</option>
+            <option value="on" data-i18n="options.soundOn">Activado</option>
+          </select>
+        </label>
+        <button class="ghost-button full" id="notificationEnableBtn" type="button" data-i18n="options.notifications">
+          Activar notificaciones
+        </button>
+        <p class="option-hint" id="notificationStatus">Notificaciones pendientes.</p>
+        <div class="quick-reminders" aria-label="Recordatorios rapidos">
+          <button type="button" data-reminder="pause" data-i18n="reminder.pause">Pausa 20 min</button>
+          <button type="button" data-reminder="breath" data-i18n="reminder.breath">Respirar 10 min</button>
+          <button type="button" data-reminder="sleep" data-i18n="reminder.sleep">Descanso noche</button>
+        </div>
+        <button class="ghost-button full" id="drawerLogoutBtn" type="button" data-i18n="auth.logout">Salir</button>
+      </div>
+
+      <div class="drawer-tabs">
+        <button class="drawer-tab active" type="button" data-drawer-tab="records" data-i18n="options.records">Mis registros</button>
+        <button class="drawer-tab" type="button" data-drawer-tab="notes" data-i18n="options.notes">Notas</button>
+        <button class="drawer-tab" type="button" data-drawer-tab="alarms" data-i18n="options.alarms">Alarmas</button>
+        <button class="drawer-tab" type="button" data-drawer-tab="profile" data-i18n="options.profile">Perfil</button>
+      </div>
+
+      <section class="drawer-section active" id="recordsPanel">
+        <div id="recordsList" class="drawer-list"></div>
+      </section>
+
+      <section class="drawer-section" id="notesPanel">
+        <form id="noteForm" class="drawer-form">
+          <input id="noteTitle" type="text" placeholder="Título" data-i18n-placeholder="notes.titlePlaceholder" required />
+          <textarea id="noteBody" rows="4" placeholder="Escribe un apunte emocional..." data-i18n-placeholder="notes.bodyPlaceholder" required></textarea>
+          <button class="primary-action full" type="submit" data-i18n="notes.save">Guardar nota</button>
+        </form>
+        <div id="notesList" class="drawer-list"></div>
+      </section>
+
+      <section class="drawer-section" id="alarmsPanel">
+        <form id="alarmForm" class="drawer-form">
+          <input id="alarmTitle" type="text" placeholder="Ej.: Pausa consciente" data-i18n-placeholder="alarms.titlePlaceholder" required />
+          <input id="alarmDate" type="date" required />
+          <input id="alarmTime" type="time" required />
+          <button class="primary-action full" type="submit" data-i18n="alarms.save">Guardar alarma</button>
+        </form>
+        <div id="alarmsList" class="drawer-list"></div>
+      </section>
+
+      <section class="drawer-section" id="profilePanel">
+        <form id="userProfileForm" class="drawer-form">
+          <input id="profileNameInput" type="text" placeholder="Nombre" data-i18n-placeholder="profile.namePlaceholder" />
+          <div class="form-row">
+            <input id="profileAgeInput" type="number" min="10" max="99" placeholder="Edad" data-i18n-placeholder="profile.agePlaceholder" />
+            <select id="profileContextInput">
+              <option value="academico" data-i18n="type.academic">Academico</option>
+              <option value="laboral" data-i18n="type.work">Laboral</option>
+              <option value="familiar" data-i18n="type.family">Familiar</option>
+              <option value="social" data-i18n="type.social">Social</option>
+              <option value="financiero" data-i18n="type.finance">Financiero</option>
+            </select>
+          </div>
+          <textarea id="profileGoalInput" rows="3" placeholder="Objetivo personal" data-i18n-placeholder="profile.goalPlaceholder"></textarea>
+          <button class="primary-action full" type="submit" data-i18n="profile.save">Guardar perfil</button>
+        </form>
+        <div class="drawer-list" id="profileSummary"></div>
+      </section>
+    </aside>
+
+    <section class="lab-screen" id="labScreen" aria-labelledby="lab-title" data-protected-shell hidden inert>
+      <div class="lab-topbar">
+        <button class="ghost-button" id="labBackBtn" type="button" data-i18n="lab.back">Volver</button>
+        <strong>ZENOVA</strong>
+      </div>
+      <div class="lab-shell">
+        <div class="section-intro">
+          <p class="eyebrow" data-i18n="lab.eyebrow">Laboratorio antiestrés</p>
+          <h2 id="lab-title" data-i18n="lab.title">Test emocional de 7 preguntas</h2>
+          <p data-i18n="lab.text">
+            Responde con sinceridad para recibir un informe breve y ejercicios mentales o físicos adaptados.
+          </p>
+        </div>
+
+        <form class="deep-test-card" id="deepTestForm">
+          <div id="deepQuestions" class="deep-questions"></div>
+          <button class="primary-action full" type="submit" data-i18n="lab.finish">Generar informe</button>
+        </form>
+
+        <div class="lab-results hidden" id="labResults">
+          <article class="result-card">
+            <h3 data-i18n="lab.report">Informe breve</h3>
+            <p id="deepReport"></p>
+          </article>
+          <article class="result-card">
+            <h3 data-i18n="lab.recommendations">Ejercicios recomendados</h3>
+            <ul id="deepRecommendations"></ul>
+            <div class="recommended-visuals" id="recommendedVisuals"></div>
+          </article>
+
+          <div class="game-grid">
+            <article class="mini-game">
+              <h3 data-i18n="game.puzzle">Puzzle de calma</h3>
+              <p data-i18n="game.puzzleText">Reconstruye la imagen moviendo las piezas hacia el espacio libre.</p>
+              <div class="game-guide">
+                <span data-i18n="game.puzzleStep1">1. Busca el cuadro vacio.</span>
+                <span data-i18n="game.puzzleStep2">2. Toca una pieza pegada al espacio.</span>
+                <span data-i18n="game.puzzleStep3">3. Reconstruye la imagen sin prisa.</span>
+              </div>
+              <div class="puzzle-board" id="puzzleBoard"></div>
+              <p class="game-status" id="puzzleStatus">Mueve una pieza junto al espacio vacío.</p>
+              <button class="ghost-button full" id="shufflePuzzleBtn" type="button" data-i18n="game.shuffle">Mezclar</button>
+            </article>
+
+            <article class="mini-game">
+              <h3 data-i18n="game.platform">Salto de serenidad</h3>
+              <p data-i18n="game.platformText">Muévete con ← → y salta con espacio para recoger puntos de calma.</p>
+              <div class="game-guide">
+                <span data-i18n="game.platformStep1">Flechas: moverse</span>
+                <span data-i18n="game.platformStep2">Espacio: saltar</span>
+                <span data-i18n="game.platformStep3">Puntos dorados: calma</span>
+              </div>
+              <canvas id="platformGame" width="520" height="280"></canvas>
+              <p class="game-status" id="platformStatus">Nivel 1 · Recolecta todos los puntos de calma.</p>
+              <div class="button-row">
+                <button class="primary-action" id="startPlatformBtn" type="button" data-i18n="game.start">Iniciar juego</button>
+                <button class="ghost-button" id="resetPlatformBtn" type="button" data-i18n="game.reset">Reiniciar</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="lab-loading hidden" id="labLoading">
+        <div class="loading-orbit">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <strong>ZENIN</strong>
+        <p>Analizando tus respuestas y preparando ejercicios...</p>
+      </div>
+    </section>
+
+    <main data-protected-shell hidden inert>
+      <section class="hero-band" id="panel" aria-labelledby="hero-title">
+        <div class="motion-field" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow" data-i18n="hero.eyebrow">Transformando estrés en bienestar</p>
+            <p class="hero-personal-greeting">Hola, <span id="heroUserName">Invitado</span></p>
+            <h1 id="hero-title" data-i18n="hero.title">Bienestar emocional diario</h1>
+            <p class="hero-lede" data-i18n="hero.lede">
+              Herramientas practicas para registrar tu estado, construir habitos, organizar objetivos
+              y convertir el cuidado emocional en acciones diarias.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-action hero-cta" type="button" data-workspace-panel="checkin" data-i18n="hero.start">Comenzar ahora</button>
+              <button class="primary-action hero-cta hero-zenin-action" type="button" data-zenin-room-open data-i18n="hero.zeninTalk">✨ Hablar con ZENIN</button>
+              <button class="secondary-action hero-cta" type="button" data-workspace-panel="programs">Programas</button>
+              <button class="sr-only-action" id="openLabBtn" type="button" hidden data-i18n="hero.deepTest">Test profundo</button>
+            </div>
+            <div class="hero-tags" aria-label="Capacidades principales">
+              <span data-i18n="hero.aiTag">Datos utiles</span>
+              <span data-i18n="hero.focusTag">Seguimiento personal</span>
+              <span data-i18n="hero.habitTag">Hábitos saludables</span>
+            </div>
+          </div>
+
+          <div class="hero-device-stage" aria-label="Vista previa de ZENOVA">
+            <div class="device-glow" aria-hidden="true"></div>
+            <div class="wellness-console phone-mockup" aria-label="Mockup móvil de ZENOVA">
+              <div class="phone-frame">
+                <div class="phone-notch" aria-hidden="true"></div>
+                <div class="phone-screen">
+                  <div class="phone-topbar">
+                    <div>
+                      <span class="phone-app-label">ZENOVA</span>
+                      <p class="welcome-user" id="welcomeUser" data-i18n="session.guest">Sesión de invitado</p>
+                    </div>
+                    <span class="phone-signal" aria-hidden="true"></span>
+                  </div>
+                  <div class="console-status">
+                    <span class="status-dot"></span>
+                    <span id="profileLabel">Perfil pendiente</span>
+                  </div>
+                  <div class="pulse-score" aria-live="polite">
+                    <span id="scoreValue">--</span>
+                    <small data-i18n="hero.estimated">nivel estimado</small>
+                  </div>
+                  <div class="quick-metrics">
+                    <div>
+                      <span id="metricSleep">0 h</span>
+                      <small data-i18n="metric.sleep">Sueño</small>
+                    </div>
+                    <div>
+                      <span id="metricStress">0/10</span>
+                      <small data-i18n="metric.stress">Estrés</small>
+                    </div>
+                    <div>
+                      <span id="metricMood">Neutral</span>
+                      <small data-i18n="metric.mood">Ánimo</small>
+                    </div>
+                  </div>
+                  <div class="phone-insight">
+                    <strong>ZENIN</strong>
+                    <p data-i18n="phone.note">Tu próxima pausa puede empezar con 2 minutos de respiración guiada.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="scroll-cue" href="#confianza" aria-label="Descubre más sobre ZENOVA">
+          <span data-i18n="hero.discover">Descubre más</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+      </section>
+
+      <section class="trust-strip" id="confianza" aria-label="Indicadores de confianza">
+        <div class="trust-grid">
+          <article>
+            <span class="trust-icon" aria-hidden="true">AI</span>
+            <strong data-i18n="trust.ai">Datos estructurados</strong>
+            <small data-i18n="trust.aiText">Cada registro queda listo para futuras recomendaciones.</small>
+          </article>
+          <article>
+            <span class="trust-icon" aria-hidden="true">SEC</span>
+            <strong data-i18n="trust.privacy">Privacidad local</strong>
+            <small data-i18n="trust.privacyText">La memoria del perfil se guarda en tu navegador.</small>
+          </article>
+          <article>
+            <span class="trust-icon" aria-hidden="true">FLOW</span>
+            <strong data-i18n="trust.tracking">Seguimiento continuo</strong>
+            <small data-i18n="trust.trackingText">Lectura progresiva de hábitos, sueño y estrés.</small>
+          </article>
+          <article>
+            <span class="trust-icon" aria-hidden="true">HAB</span>
+            <strong data-i18n="trust.habits">Hábitos saludables</strong>
+            <small data-i18n="trust.habitsText">Acciones simples para sostener el bienestar diario.</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="landing-section benefits-section app-runtime-section" id="beneficios" aria-labelledby="benefits-title">
+        <div class="section-shell">
+          <div class="section-intro compact">
+            <p class="eyebrow" data-i18n="benefits.eyebrow">Beneficios reales</p>
+            <h2 id="benefits-title" data-i18n="benefits.title">Bienestar que se adapta a tu día</h2>
+            <p data-i18n="benefits.text">
+              ZENOVA no solo muestra herramientas: aprende de tus patrones y te ayuda a convertir el cuidado emocional en acciones pequeñas.
+            </p>
+          </div>
+          <div class="benefit-grid">
+            <article class="benefit-card">
+              <span class="benefit-icon" aria-hidden="true">01</span>
+              <h3 data-i18n="benefits.card1Title">Comprendes tus patrones</h3>
+              <p data-i18n="benefits.card1Text">Relaciona estrés, sueño, notas y contexto para detectar qué está influyendo en tu bienestar.</p>
+            </article>
+            <article class="benefit-card">
+              <span class="benefit-icon" aria-hidden="true">02</span>
+              <h3 data-i18n="benefits.card2Title">Recibes apoyo accionable</h3>
+              <p data-i18n="benefits.card2Text">Cada recomendación se convierte en una práctica concreta, breve y posible de realizar.</p>
+            </article>
+            <article class="benefit-card">
+              <span class="benefit-icon" aria-hidden="true">03</span>
+              <h3 data-i18n="benefits.card3Title">Construyes hábitos sostenibles</h3>
+              <p data-i18n="benefits.card3Text">El sistema prioriza rutinas, recordatorios y recursos que encajan con tus metas personales.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="landing-section how-section app-runtime-section" id="como-funciona" aria-labelledby="how-title">
+        <div class="section-shell how-layout">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="how.eyebrow">Cómo funciona</p>
+            <h2 id="how-title" data-i18n="how.title">Tres pasos para personalizar tu calma</h2>
+          </div>
+          <div class="how-steps">
+            <article>
+              <span>1</span>
+              <h3 data-i18n="how.step1Title">Evalúas tu estado</h3>
+              <p data-i18n="how.step1Text">Registras estrés, sueño, ansiedad y necesidad actual.</p>
+            </article>
+            <article>
+              <span>2</span>
+              <h3 data-i18n="how.step2Title">ZENIN interpreta contexto</h3>
+              <p data-i18n="how.step2Text">La memoria combina historial, objetivos, hábitos y patrones recientes.</p>
+            </article>
+            <article>
+              <span>3</span>
+              <h3 data-i18n="how.step3Title">Recibes un plan claro</h3>
+              <p data-i18n="how.step3Text">Obtienes ejercicios, recursos y una explicación sencilla de por qué se recomiendan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="daily-center ds-section zenova-workspace" id="centro-diario" aria-labelledby="daily-title">
+        <div class="section-shell workspace-shell">
+          <div class="workspace-header">
+            <div>
+              <p class="eyebrow" data-i18n="nav.home">Inicio</p>
+              <h2 id="daily-title">Hola, <span id="dashboardUserName">Invitado</span></h2>
+              <p class="workspace-brief">Lo importante para hoy, sin ruido visual.</p>
+            </div>
+            <div class="workspace-actions">
+              <button class="ds-button ds-button--primary" id="quickCheckinBtn" type="button" data-workspace-panel="checkin">
+                Check-in Inteligente
+              </button>
+              <button class="ds-button ds-button--secondary" id="activityCenterBtn" type="button" data-workspace-panel="activity">
+                Actividad
+              </button>
+              <button class="ds-button ds-button--secondary" id="customizeDashboardBtn" type="button" data-workspace-panel="widgets">
+                Paneles
+              </button>
+            </div>
+          </div>
+
+          <div class="workspace-focus-grid" aria-label="Resumen principal">
+            <article class="focus-card focus-card--welcome">
+              <small>Estado actual</small>
+              <strong id="minimalMoodLabel">Listo</strong>
+              <div class="state-chip-row" id="minimalStateTags"></div>
+            </article>
+            <article class="focus-card focus-card--score">
+              <small>Indice de bienestar</small>
+              <strong id="minimalWellbeingScore">--</strong>
+              <div class="focus-progress"><span id="minimalWellbeingBar"></span></div>
+            </article>
+            <article class="focus-card focus-card--action">
+              <small>Siguiente mejor accion</small>
+              <strong id="minimalNextAction">Completar check-in</strong>
+              <p id="minimalNextReason">ZENOVA ajustara tu dashboard con tu estado de hoy.</p>
+              <button class="ds-button ds-button--secondary" id="minimalNextActionBtn" type="button">Abrir</button>
+            </article>
+            <article class="focus-card focus-card--agenda">
+              <small>Agenda inmediata</small>
+              <strong id="minimalAgendaTitle">Sin actividad</strong>
+              <span id="minimalAgendaMeta">Hoy</span>
+            </article>
+          </div>
+
+          <div class="dashboard-workbench dashboard-workbench--minimal" aria-labelledby="dashboard-widgets-title">
+            <div class="dashboard-toolbar dashboard-toolbar--minimal">
+              <div>
+                <p class="ds-kicker">Maximo 4 visibles</p>
+                <h3 id="dashboard-widgets-title">Dashboard esencial</h3>
+              </div>
+              <div class="dashboard-actions">
+                <button class="ds-button ds-button--secondary" id="restoreWidgetsBtn" type="button" data-i18n="dashboard.restore">
+                  Restaurar widgets
+                </button>
+                <button class="ds-button ds-button--tertiary" type="button" data-workspace-panel="widgets">
+                  Personalizar
+                </button>
+              </div>
+            </div>
+            <div class="widget-grid widget-grid--minimal" id="dynamicWidgetGrid" aria-live="polite"></div>
+          </div>
+
+          <section class="dashboard-recommendation-band" aria-labelledby="recommended-tools-title">
+            <div class="workspace-section-head">
+              <div>
+                <p class="ds-kicker">Recomendadas para ti</p>
+                <h3 id="recommended-tools-title">Herramientas rápidas</h3>
+              </div>
+              <button class="ds-button ds-button--secondary" type="button" data-workspace-panel="actions">Ver todas</button>
+            </div>
+            <div class="recommended-tool-grid" id="dashboardRecommendedTools" aria-live="polite"></div>
+          </section>
+
+          <section class="dashboard-program-band" aria-labelledby="featured-programs-title">
+            <div class="workspace-section-head">
+              <div>
+                <p class="ds-kicker">Programas guiados</p>
+                <h3 id="featured-programs-title">Rutas destacadas</h3>
+              </div>
+              <button class="ds-button ds-button--secondary" type="button" data-workspace-panel="programs">Ver todos</button>
+            </div>
+            <div class="featured-program-grid" id="dashboardFeaturedPrograms" aria-live="polite"></div>
+          </section>
+
+          <div class="workspace-module-grid" aria-label="Espacios de trabajo">
+            <button type="button" data-workspace-panel="checkin"><span>C</span><strong>Check-in Inteligente</strong></button>
+            <button type="button" data-workspace-panel="actions"><span>H</span><strong>Herramientas</strong></button>
+            <button type="button" data-workspace-panel="programs"><span>P</span><strong>Programas</strong></button>
+            <button type="button" data-workspace-panel="agenda"><span>A</span><strong>Agenda</strong></button>
+            <button type="button" data-workspace-panel="library"><span>B</span><strong>Biblioteca</strong></button>
+            <button type="button" data-workspace-panel="premium"><span>*</span><strong>Premium</strong></button>
+            <button type="button" data-workspace-panel="settings"><span>C</span><strong>Opciones</strong></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard-premium-section" id="premium-summary" aria-labelledby="premium-summary-title">
+        <div class="section-shell premium-summary-shell">
+          <article class="premium-summary-card">
+            <div>
+              <p class="eyebrow">ZENOVA Premium</p>
+              <h2 id="premium-summary-title">Funciones avanzadas</h2>
+            </div>
+            <div class="premium-summary-features" aria-label="Beneficios premium">
+              <span>ZENIN IA</span>
+              <span>Informes inteligentes</span>
+              <span>Rutinas Premium</span>
+              <span>Seguimiento avanzado</span>
+              <span>Historial completo</span>
+            </div>
+            <button class="primary-action" type="button" data-workspace-panel="premium">Conocer Premium</button>
+          </article>
+        </div>
+      </section>
+
+      <div class="workspace-panel-backdrop" id="workspacePanelBackdrop" hidden></div>
+      <aside class="workspace-panel" id="workspacePanel" aria-labelledby="workspacePanelTitle" aria-modal="true" hidden>
+        <div class="workspace-panel-header">
+          <div>
+            <p class="eyebrow" id="workspacePanelEyebrow">ZENOVA</p>
+            <h2 id="workspacePanelTitle">Panel</h2>
+          </div>
+          <button class="icon-button" id="workspacePanelClose" type="button" aria-label="Cerrar">×</button>
+        </div>
+        <div class="workspace-panel-body" id="workspacePanelBody"></div>
+        <div class="workspace-panel-footer" id="workspacePanelFooter" hidden></div>
+      </aside>
+
+      <section class="product-suite ds-section app-runtime-section" id="plan-personal" aria-labelledby="product-suite-title">
+        <div class="section-shell">
+          <div class="section-intro compact">
+            <p class="eyebrow" data-i18n="suite.eyebrow">Herramientas diarias</p>
+            <h2 id="product-suite-title" data-i18n="suite.title">Habitos, objetivos y diario personal</h2>
+            <p data-i18n="suite.text">
+              Cada accion guarda datos estructurados para que ZENOVA pueda generar seguimiento util ahora y preparar analisis futuros.
+            </p>
+          </div>
+
+          <div class="product-grid">
+            <article class="ds-card product-card" aria-labelledby="habit-title">
+              <div class="ds-card-header">
+                <div>
+                  <p class="ds-kicker" data-i18n="habits.eyebrow">Sistema de habitos</p>
+                  <h3 id="habit-title" data-i18n="habits.title">Rutinas de bienestar</h3>
+                </div>
+                <span class="ds-status-pill" id="habitSummaryPill">0</span>
+              </div>
+              <form class="product-form" id="habitForm">
+                <input id="habitEditId" type="hidden" />
+                <input class="ds-input" id="habitTitle" type="text" required placeholder="Ej.: pausa activa" data-i18n-placeholder="habits.placeholder" />
+                <div class="form-row">
+                  <select class="ds-select" id="habitCategory">
+                    <option value="respiracion" data-i18n="habits.categoryBreath">Respiracion</option>
+                    <option value="movimiento" data-i18n="habits.categoryMove">Movimiento</option>
+                    <option value="sueno" data-i18n="habits.categorySleep">Sueno</option>
+                    <option value="orden" data-i18n="habits.categoryOrder">Orden</option>
+                  </select>
+                  <select class="ds-select" id="habitFrequency">
+                    <option value="daily" data-i18n="habits.daily">Diario</option>
+                    <option value="weekdays" data-i18n="habits.weekdays">Lunes a viernes</option>
+                    <option value="weekly" data-i18n="habits.weekly">Semanal</option>
+                  </select>
+                </div>
+                <div class="form-row">
+                  <input class="ds-input" id="habitTime" type="time" />
+                  <input class="ds-input" id="habitTarget" type="number" min="1" max="30" value="7" aria-label="Meta de dias" />
+                </div>
+                <label class="compact-check">
+                  <input id="habitReminder" type="checkbox" />
+                  <span data-i18n="habits.reminder">Crear recordatorio sugerido</span>
+                </label>
+                <button class="ds-button ds-button--primary full" type="submit" data-i18n="habits.save">Guardar habito</button>
+              </form>
+              <div class="product-list" id="habitList"></div>
+            </article>
+
+            <article class="ds-card product-card" aria-labelledby="goals-title">
+              <div class="ds-card-header">
+                <div>
+                  <p class="ds-kicker" data-i18n="goals.eyebrow">Objetivos personales</p>
+                  <h3 id="goals-title" data-i18n="goals.title">Metas con progreso real</h3>
+                </div>
+                <span class="ds-status-pill" id="goalSummaryPill">0%</span>
+              </div>
+              <form class="product-form" id="personalGoalForm">
+                <input id="goalEditId" type="hidden" />
+                <input class="ds-input" id="goalTitle" type="text" required placeholder="Ej.: dormir mejor esta semana" data-i18n-placeholder="goals.placeholder" />
+                <textarea class="ds-textarea" id="goalDescription" rows="3" placeholder="Descripcion breve" data-i18n-placeholder="goals.description"></textarea>
+                <div class="form-row">
+                  <input class="ds-input" id="goalDueDate" type="date" />
+                  <select class="ds-select" id="goalPriority">
+                    <option value="media" data-i18n="goals.priorityMedium">Prioridad media</option>
+                    <option value="alta" data-i18n="goals.priorityHigh">Prioridad alta</option>
+                    <option value="baja" data-i18n="goals.priorityLow">Prioridad baja</option>
+                  </select>
+                </div>
+                <input class="ds-input" id="goalSubtasks" type="text" placeholder="Subtareas separadas por coma" data-i18n-placeholder="goals.subtasks" />
+                <button class="ds-button ds-button--primary full" type="submit" data-i18n="goals.save">Guardar objetivo</button>
+              </form>
+              <div class="product-list" id="personalGoalList"></div>
+            </article>
+
+            <article class="ds-card product-card diary-card" aria-labelledby="journal-title">
+              <div class="ds-card-header">
+                <div>
+                  <p class="ds-kicker" data-i18n="journal.eyebrow">Diario personal</p>
+                  <h3 id="journal-title" data-i18n="journal.title">Entrada emocional estructurada</h3>
+                </div>
+                <span class="ds-status-pill" id="journalSummaryPill">0</span>
+              </div>
+              <form class="product-form" id="journalForm">
+                <div class="emotion-picker" id="journalEmotionPicker" aria-label="Emociones"></div>
+                <input class="ds-input" id="journalTags" type="text" placeholder="Etiquetas: estudio, familia, descanso" data-i18n-placeholder="journal.tags" />
+                <textarea class="ds-textarea" id="journalText" rows="5" required placeholder="Escribe libremente lo que paso..." data-i18n-placeholder="journal.placeholder"></textarea>
+                <div class="attachment-hint">
+                  <span data-i18n="journal.attachments">Estructura preparada para imagenes y archivos futuros.</span>
+                </div>
+                <button class="ds-button ds-button--primary full" type="submit" data-i18n="journal.save">Guardar entrada</button>
+              </form>
+              <div class="product-list" id="journalList"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-band assessment-wizard-band app-runtime-section" id="evaluacion" aria-labelledby="evaluation-title">
+        <div class="section-shell two-column">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="evaluation.eyebrow">Evaluación inteligente del estrés</p>
+            <h2 id="evaluation-title" data-i18n="evaluation.title">Asistente multifactor</h2>
+            <p data-i18n="evaluation.text">Responde una pregunta por vez. ZENOVA hará el cruce con tu historial.</p>
+          </div>
+
+          <form class="assessment-card assessment-card--visual" id="stressForm">
+            <div class="assessment-form-head">
+              <span class="assessment-avatar" aria-hidden="true">Z</span>
+              <div>
+                <p class="eyebrow">Motor multifactor</p>
+                <h3>Lectura personalizada</h3>
+                <p>ZENOVA une tu test con hábitos, metas, calendario, diario y uso reciente.</p>
+              </div>
+            </div>
+
+            <div class="assessment-visual-fields" id="assessmentVisualFields" aria-label="Opciones visuales del test"></div>
+
+            <div class="assessment-legacy-fields" aria-hidden="true">
+              <label>
+                <span data-i18n="evaluation.type">Tipo de estrés principal</span>
+                <select id="stressType" name="stressType">
+                  <option value="academico" data-i18n="type.academic">Académico</option>
+                  <option value="laboral" data-i18n="type.work">Laboral</option>
+                  <option value="familiar" data-i18n="type.family">Familiar</option>
+                  <option value="social" data-i18n="type.social">Social</option>
+                  <option value="financiero" data-i18n="type.finance">Financiero</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="evaluation.current">Estrés actual</span>
+                <span class="range-value"><output id="stressOut">5</output>/10</span>
+                <input id="stressLevel" name="stressLevel" type="range" min="1" max="10" value="5" />
+              </label>
+
+              <label>
+                <span data-i18n="evaluation.sleepHours">Horas de sueño</span>
+                <span class="range-value"><output id="sleepOut">6</output> h</span>
+                <input id="sleepHours" name="sleepHours" type="range" min="0" max="10" value="6" />
+              </label>
+
+              <label>
+                <span data-i18n="evaluation.anxiety">Ansiedad o agitación</span>
+                <span class="range-value"><output id="anxietyOut">4</output>/10</span>
+                <input id="anxietyLevel" name="anxietyLevel" type="range" min="1" max="10" value="4" />
+              </label>
+
+              <label>
+                <span data-i18n="evaluation.need">¿Qué necesitas ahora?</span>
+                <select id="needNow" name="needNow">
+                  <option value="calma" data-i18n="need.calm">Calmar mi mente</option>
+                  <option value="orden" data-i18n="need.order">Organizar mis pensamientos</option>
+                  <option value="descanso" data-i18n="need.rest">Descansar mejor</option>
+                  <option value="enfoque" data-i18n="need.focus">Recuperar enfoque</option>
+                </select>
+              </label>
+            </div>
+
+            <button class="primary-action full assessment-submit-legacy" type="submit" data-i18n="evaluation.generate">Generar resumen ejecutivo</button>
+          </form>
+        </div>
+
+        <div class="section-shell result-grid intelligent-result-grid" aria-live="polite">
+          <article class="result-card executive-summary-card" id="executiveSummaryPanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Resumen Ejecutivo</p>
+                <h3 id="executiveSummaryTitle">Lectura inicial de bienestar</h3>
+              </div>
+              <span class="summary-status-pill" id="executiveStatusPill">Pendiente</span>
+            </div>
+            <div class="executive-hero">
+              <img src="assets/zenova-summary.png" alt="Resumen visual de ZENOVA" />
+              <p id="executiveNarrative">Completa el test para que ZENOVA combine tu contexto real y genere una ruta de acción.</p>
+            </div>
+            <div class="executive-summary-grid" id="executiveSummaryGrid"></div>
+          </article>
+
+          <article class="result-card detection-card" id="patternDetectionPanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Análisis contextual</p>
+                <h3>Qué detectó ZENOVA</h3>
+              </div>
+              <span class="assessment-pulse" aria-hidden="true"></span>
+            </div>
+            <div class="detected-insights-list" id="detectedInsightsList"></div>
+          </article>
+
+          <article class="result-card action-route-card" id="actionRoutePanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Ruta de acción</p>
+                <h3>Para hoy</h3>
+              </div>
+              <span class="summary-status-pill">Interactiva</span>
+            </div>
+            <div class="action-route-list" id="actionRouteList"></div>
+          </article>
+
+          <article class="result-card explainability-card" id="explainabilityPanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Transparencia</p>
+                <h3>Por qué recibiste estas recomendaciones</h3>
+              </div>
+            </div>
+            <div class="factor-bars" id="factorWeightBars"></div>
+          </article>
+
+          <article class="result-card simulator-card" id="progressSimulatorPanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Simulador</p>
+                <h3>Qué pasaría si...</h3>
+              </div>
+            </div>
+            <div class="scenario-buttons" id="scenarioButtons"></div>
+            <div class="scenario-output" id="scenarioOutput"></div>
+          </article>
+
+          <article class="result-card evolution-card" id="evolutionPanel">
+            <div class="panel-title-row">
+              <div>
+                <p class="eyebrow">Evolución</p>
+                <h3>Hoy, semana y mes</h3>
+              </div>
+              <div class="evolution-tabs" id="evolutionTabs" aria-label="Rango de evolución">
+                <button class="is-active" type="button" data-evolution-range="today">Hoy</button>
+                <button type="button" data-evolution-range="week">Semana</button>
+                <button type="button" data-evolution-range="month">Mes</button>
+              </div>
+            </div>
+            <div class="evolution-timeline" id="evolutionTimeline"></div>
+          </article>
+
+          <article class="legacy-assessment-output" aria-hidden="true">
+            <p id="resultSummary" data-i18n="result.empty">
+              Completa el test para recibir una lectura inicial y recomendaciones según tu situación.
+            </p>
+            <ul id="planList">
+              <li data-i18n="plan.default1">Respiración guiada de 2 minutos.</li>
+              <li data-i18n="plan.default2">Registro emocional diario.</li>
+              <li data-i18n="plan.default3">Recursos personalizados por tipo de estrés.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="section-shell profile-experience hidden" id="profileExperience" aria-live="polite">
+          <article class="profile-visual-card">
+            <div class="profile-scene" id="profileScene">
+              <div class="profile-sky"></div>
+              <div class="profile-person">
+                <span class="profile-head"></span>
+                <span class="profile-body"></span>
+                <span class="profile-arm left"></span>
+                <span class="profile-arm right"></span>
+                <span class="profile-heart"></span>
+              </div>
+              <div class="profile-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <img class="profile-floating-image" id="profileFloatingImage" src="assets/meditation.png" alt="Perfil emocional generado" />
+            </div>
+            <div class="profile-tags" id="profileTags"></div>
+          </article>
+
+          <article class="profile-report-card">
+            <p class="eyebrow" id="profileDynamicEyebrow">ZENOVA</p>
+            <h3 id="profileDynamicTitle">Lectura personalizada</h3>
+            <p class="typewriter-text" id="profileTypewriter"></p>
+            <div class="insight-grid" id="insightGrid"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="tool-band app-runtime-section" id="herramientas" aria-labelledby="tools-title">
+        <div class="section-shell">
+          <div class="section-intro compact">
+            <p class="eyebrow" data-i18n="tools.eyebrow">Haz algo ahora</p>
+            <h2 id="tools-title" data-i18n="tools.title">Acciones inmediatas</h2>
+          </div>
+
+          <div class="immediate-action-grid" aria-label="Acciones inmediatas">
+            <article class="immediate-action-card">
+              <span>R</span>
+              <strong>Respiración</strong>
+              <small>2 minutos</small>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="action-breathing">Comenzar</button>
+            </article>
+            <article class="immediate-action-card">
+              <span>A</span>
+              <strong>Anclaje 5-4-3</strong>
+              <small>3 minutos</small>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="action-grounding">Comenzar</button>
+            </article>
+            <article class="immediate-action-card">
+              <span>M</span>
+              <strong>Pausa activa</strong>
+              <small>5 minutos</small>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="action-movement">Comenzar</button>
+            </article>
+            <article class="immediate-action-card">
+              <span>O</span>
+              <strong>Orden mental</strong>
+              <small>4 minutos</small>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="action-order">Comenzar</button>
+            </article>
+          </div>
+
+          <div class="tools-runtime" aria-hidden="true">
+            <article class="breathing-tool">
+              <div class="breath-ring" id="breathRing">
+                <div class="breath-guide" aria-hidden="true">
+                  <span class="guide-person head"></span>
+                  <span class="guide-person body"></span>
+                  <span class="guide-air one"></span>
+                  <span class="guide-air two"></span>
+                </div>
+                <span id="breathPhase">Listo</span>
+                <small id="breathTimer">02:00</small>
+              </div>
+              <div class="tool-copy">
+                <h3 data-i18n="breath.title">Respiración guiada</h3>
+                <p data-i18n="breath.text">
+                  Secuencia de inhalación, pausa y exhalación para reducir la activación física y
+                  recuperar equilibrio.
+                </p>
+                <div class="button-row">
+                  <button class="primary-action" id="breathStart" type="button" data-i18n="breath.start">Iniciar</button>
+                  <button class="ghost-button" id="breathReset" type="button" data-i18n="breath.reset">Reiniciar</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <article class="resource-tool compact-resource-tool">
+              <div class="tabs" role="tablist" aria-label="Tipos de estrés">
+                <button class="tab active" type="button" data-type="academico" data-i18n="type.academic">Académico</button>
+                <button class="tab" type="button" data-type="laboral" data-i18n="type.work">Laboral</button>
+                <button class="tab" type="button" data-type="familiar" data-i18n="type.family">Familiar</button>
+                <button class="tab" type="button" data-type="social" data-i18n="type.social">Social</button>
+                <button class="tab" type="button" data-type="financiero" data-i18n="type.finance">Financiero</button>
+              </div>
+              <div class="resource-content" id="resourceContent"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="exercise-band app-runtime-section" id="ejercicios" aria-labelledby="exercise-title">
+        <div class="section-shell">
+          <div class="section-intro compact">
+            <p class="eyebrow" data-i18n="exercise.eyebrow">Rutinas completas</p>
+            <h2 id="exercise-title" data-i18n="exercise.title">Programas guiados</h2>
+          </div>
+          <div class="guided-program-carousel" aria-label="Programas guiados">
+            <article class="guided-program-card">
+              <span>01</span>
+              <h3>Calmar ansiedad</h3>
+              <div class="program-meta"><small>8 min</small><small>Fácil</small><small>Regular activación</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-anxiety">Iniciar</button>
+            </article>
+            <article class="guided-program-card">
+              <span>02</span>
+              <h3>Antes de estudiar</h3>
+              <div class="program-meta"><small>12 min</small><small>Media</small><small>Preparar enfoque</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-study">Iniciar</button>
+            </article>
+            <article class="guided-program-card">
+              <span>03</span>
+              <h3>Después de un examen</h3>
+              <div class="program-meta"><small>10 min</small><small>Fácil</small><small>Soltar tensión</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-exam">Iniciar</button>
+            </article>
+            <article class="guided-program-card">
+              <span>04</span>
+              <h3>Dormir mejor</h3>
+              <div class="program-meta"><small>15 min</small><small>Media</small><small>Bajar estímulo</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-sleep">Iniciar</button>
+            </article>
+            <article class="guided-program-card">
+              <span>05</span>
+              <h3>Recuperar concentración</h3>
+              <div class="program-meta"><small>9 min</small><small>Fácil</small><small>Volver al foco</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-focus">Iniciar</button>
+            </article>
+            <article class="guided-program-card">
+              <span>06</span>
+              <h3>Estrés laboral</h3>
+              <div class="program-meta"><small>11 min</small><small>Media</small><small>Reiniciar ritmo</small></div>
+              <button class="ds-button ds-button--primary" type="button" data-experience-panel="program-work">Iniciar</button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="agenda-band app-runtime-section" id="agenda" aria-labelledby="agenda-title">
+        <div class="section-shell agenda-layout">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="agenda.eyebrow">Calendario de bienestar</p>
+            <h2 id="agenda-title" data-i18n="agenda.title">Actividades y recordatorios</h2>
+            <p data-i18n="agenda.text">
+              Organiza pausas, ejercicios, sesiones de seguimiento y actividades antiestrés.
+            </p>
+          </div>
+          <form class="calendar-card" id="activityForm">
+            <label>
+              <span data-i18n="agenda.activity">Actividad</span>
+              <input id="activityTitle" type="text" required placeholder="Respiración, caminata, journaling..." data-i18n-placeholder="agenda.placeholder" />
+            </label>
+            <div class="form-row">
+              <label>
+                <span data-i18n="agenda.date">Fecha</span>
+                <input id="activityDate" type="date" required />
+              </label>
+              <label>
+                <span data-i18n="agenda.time">Hora</span>
+                <input id="activityTime" type="time" required />
+              </label>
+            </div>
+            <label>
+              <span data-i18n="agenda.type">Tipo</span>
+              <select id="activityType">
+                <option value="respiracion" data-i18n="agenda.typeBreath">Respiración</option>
+                <option value="movimiento" data-i18n="agenda.typeMove">Movimiento</option>
+                <option value="nota" data-i18n="agenda.typeNote">Nota emocional</option>
+                <option value="test" data-i18n="agenda.typeTest">Test ZENOVA</option>
+              </select>
+            </label>
+            <div class="form-row">
+              <label>
+                <span data-i18n="agenda.kind">Elemento</span>
+                <select id="activityKind">
+                  <option value="actividad" data-i18n="agenda.kindActivity">Actividad</option>
+                  <option value="tarea" data-i18n="agenda.kindTask">Tarea</option>
+                  <option value="recordatorio" data-i18n="agenda.kindReminder">Recordatorio</option>
+                  <option value="evento" data-i18n="agenda.kindEvent">Evento</option>
+                </select>
+              </label>
+              <label>
+                <span data-i18n="agenda.repeat">Repeticion</span>
+                <select id="activityRepeat">
+                  <option value="none" data-i18n="agenda.repeatNone">Sin repetir</option>
+                  <option value="daily" data-i18n="agenda.repeatDaily">Diaria</option>
+                  <option value="weekly" data-i18n="agenda.repeatWeekly">Semanal</option>
+                  <option value="monthly" data-i18n="agenda.repeatMonthly">Mensual</option>
+                </select>
+              </label>
+            </div>
+            <button class="primary-action full" type="submit" data-i18n="agenda.save">Agregar actividad</button>
+          </form>
+        </div>
+        <div class="section-shell calendar-output">
+          <div class="calendar-strip" id="calendarStrip"></div>
+          <article class="result-card">
+            <h3 data-i18n="agenda.upcoming">Próximas actividades</h3>
+            <div id="activitiesList" class="drawer-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-band dark app-runtime-section" id="seguimiento" aria-labelledby="tracking-title">
+        <div class="section-shell two-column">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="tracking.eyebrow">Seguimiento conductual</p>
+            <h2 id="tracking-title" data-i18n="tracking.title">Registro emocional diario</h2>
+            <p data-i18n="tracking.text">
+              ZENOVA registra patrones de sueño, estrés y ansiedad para detectar momentos críticos y
+              reforzar hábitos saludables.
+            </p>
+            <img class="meditation-asset" src="assets/meditation.png" alt="Persona meditando" />
+          </div>
+
+          <form class="tracker-card smart-checkin-card" id="smartCheckinForm" aria-labelledby="smart-checkin-title">
+            <p class="ds-kicker" id="smart-checkin" data-i18n="checkin.eyebrow">Check-in inteligente</p>
+            <h3 id="smart-checkin-title" data-i18n="checkin.title">Registra tu estado sin escribir</h3>
+            <div class="checkin-option-grid" id="checkinOptionGrid"></div>
+            <details class="checkin-deepener" id="checkinDeepener">
+              <summary data-i18n="checkin.deepen">Quiero profundizar</summary>
+              <div class="checkin-followup" id="checkinFollowUp"></div>
+            </details>
+            <label class="ds-field">
+              <span data-i18n="checkin.freeText">Texto libre opcional</span>
+              <textarea
+                class="ds-textarea"
+                id="checkinFreeText"
+                rows="4"
+                placeholder="Puedes describir cualquier situacion; se guardara para analisis futuro, sin IA por ahora."
+                data-i18n-placeholder="checkin.freePlaceholder"
+              ></textarea>
+            </label>
+            <button class="ds-button ds-button--primary full" type="submit" data-i18n="checkin.save">Guardar check-in</button>
+            <p class="structured-hint" data-i18n="checkin.structure">
+              Las respuestas se almacenan como historial estructurado para futuras recomendaciones.
+            </p>
+          </form>
+
+          <form class="tracker-card" id="trackerForm">
+            <p class="ds-kicker" data-i18n="tracking.manual">Modo manual detallado</p>
+            <label>
+              <span data-i18n="tracking.todayStress">Estrés de hoy</span>
+              <span class="range-value"><output id="todayStressOut">5</output>/10</span>
+              <input id="todayStress" type="range" min="1" max="10" value="5" />
+            </label>
+            <label>
+              <span data-i18n="tracking.lastSleep">Sueño de anoche</span>
+              <span class="range-value"><output id="todaySleepOut">6</output> h</span>
+              <input id="todaySleep" type="range" min="0" max="10" value="6" />
+            </label>
+            <label>
+              <span data-i18n="tracking.moment">Momento de mayor ansiedad</span>
+              <select id="anxietyMoment">
+                <option data-i18n="moment.morning">Mañana</option>
+                <option data-i18n="moment.afternoon">Tarde</option>
+                <option data-i18n="moment.night">Noche</option>
+                <option data-i18n="moment.work">Durante clases o trabajo</option>
+              </select>
+            </label>
+            <label>
+              <span data-i18n="tracking.note">Nota breve</span>
+              <textarea
+                id="dailyNote"
+                rows="3"
+                placeholder="Ej.: examen, reunión, cansancio..."
+                data-i18n-placeholder="tracking.notePlaceholder"
+              ></textarea>
+            </label>
+            <button class="primary-action full" type="submit" data-i18n="tracking.save">Guardar registro</button>
+          </form>
+        </div>
+
+        <div class="section-shell tracking-output">
+          <article class="chart-card">
+            <h3 data-i18n="tracking.lastEntries">Últimos registros</h3>
+            <div class="bars" id="stressBars" aria-label="Gráfico de estrés registrado"></div>
+          </article>
+          <article class="result-card">
+            <h3 data-i18n="tracking.patternTitle">Patrón detectado</h3>
+            <p id="patternText" data-i18n="tracking.patternEmpty">
+              Guarda al menos un registro para que ZENOVA identifique tu tendencia reciente.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="progress-band app-runtime-section" id="progreso" aria-labelledby="progress-title">
+        <div class="section-shell progress-layout">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="progress.eyebrow">Progreso emocional</p>
+            <h2 id="progress-title" data-i18n="progress.title">Lectura semanal de bienestar</h2>
+            <p data-i18n="progress.text">
+              ZENOVA cruza tus registros, test y actividades para mostrar cambios semanales y sugerencias mas precisas.
+            </p>
+          </div>
+
+          <article class="progress-card">
+            <div class="progress-card-header">
+              <div>
+                <h3 data-i18n="progress.chartTitle">Grafica semanal</h3>
+                <p id="weeklySummary">Guarda registros para ver tu tendencia.</p>
+              </div>
+              <span class="progress-orb" aria-hidden="true"></span>
+            </div>
+            <svg id="weeklyChart" class="weekly-chart" viewBox="0 0 640 260" role="img" aria-label="Grafica semanal de estres y descanso"></svg>
+          </article>
+        </div>
+
+        <div class="section-shell insight-output">
+          <article class="result-card">
+            <h3 data-i18n="progress.recommendations">Recomendaciones por historial</h3>
+            <ul class="resource-list" id="historyRecommendations"></ul>
+          </article>
+          <article class="result-card">
+            <h3 data-i18n="progress.achievements">Insignias de avance</h3>
+            <div class="achievement-grid" id="achievementGrid"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="library-band app-runtime-section" id="biblioteca" aria-labelledby="library-title">
+        <div class="section-shell">
+          <div class="section-intro compact">
+            <p class="eyebrow" data-i18n="library.eyebrow">Biblioteca de recursos</p>
+            <h2 id="library-title" data-i18n="library.title">Guia rapida por situacion</h2>
+            <p data-i18n="library.text">
+              Explora recursos sobre ansiedad, estres academico, familia, cansancio, presion social y descanso.
+            </p>
+          </div>
+          <div class="library-controls ds-card">
+            <label class="ds-field">
+              <span data-i18n="library.search">Buscar recurso</span>
+              <input class="ds-input" id="librarySearch" type="search" placeholder="Ej.: sueño, concentración, ansiedad..." data-i18n-placeholder="library.searchPlaceholder" />
+            </label>
+            <label class="ds-field">
+              <span data-i18n="library.category">Categoria</span>
+              <select class="ds-select" id="libraryCategory">
+                <option value="all" data-i18n="library.all">Todas</option>
+                <option value="ansiedad">Ansiedad</option>
+                <option value="estres">Estres</option>
+                <option value="sueno">Sueno</option>
+                <option value="productividad">Productividad saludable</option>
+                <option value="emociones">Inteligencia emocional</option>
+                <option value="mindfulness">Mindfulness</option>
+              </select>
+            </label>
+            <label class="ds-field">
+              <span data-i18n="library.difficulty">Dificultad</span>
+              <select class="ds-select" id="libraryDifficulty">
+                <option value="all" data-i18n="library.all">Todas</option>
+                <option value="facil" data-i18n="library.easy">Facil</option>
+                <option value="media" data-i18n="library.medium">Media</option>
+                <option value="profunda" data-i18n="library.deep">Profunda</option>
+              </select>
+            </label>
+            <label class="ds-field">
+              <span data-i18n="library.time">Tiempo</span>
+              <select class="ds-select" id="libraryTime">
+                <option value="all" data-i18n="library.anyTime">Cualquiera</option>
+                <option value="short" data-i18n="library.short">Hasta 5 min</option>
+                <option value="medium" data-i18n="library.mediumTime">6-15 min</option>
+                <option value="long" data-i18n="library.long">Mas de 15 min</option>
+              </select>
+            </label>
+          </div>
+          <div class="library-grid" id="resourceLibraryGrid"></div>
+        </div>
+      </section>
+
+      <section class="chat-band app-runtime-section" id="chat" aria-labelledby="chat-title">
+        <div class="section-shell chat-layout">
+          <div class="section-intro">
+            <p class="eyebrow" data-i18n="chat.eyebrow">Orientacion tematica ZENIN</p>
+            <h2 id="chat-title" data-i18n="chat.title">Consulta sobre estrés y bienestar</h2>
+            <p data-i18n="chat.text">
+              El asistente responde preguntas relacionadas con ZENOVA, manejo del estrés, respiración,
+              seguimiento emocional y hábitos de bienestar.
+            </p>
+            <div class="chat-topics">
+              <button type="button" data-chat-prompt="¿Cómo reduzco el estrés académico?" data-i18n="chat.quick1">
+                Estrés académico
+              </button>
+              <button type="button" data-chat-prompt="¿Qué hago si tengo ansiedad ahora?" data-i18n="chat.quick2">
+                Ansiedad ahora
+              </button>
+              <button type="button" data-chat-prompt="¿Cómo funciona ZENOVA?" data-i18n="chat.quick3">
+                Cómo funciona
+              </button>
+            </div>
+          </div>
+
+          <article class="chat-card" aria-label="Orientacion ZENIN">
+            <div class="chat-header">
+              <div class="zenin-live-avatar zenin-live-avatar--mini" data-zenin-avatar data-zenin-state="listening" data-zenin-expression="calm" role="img" aria-label="ZENIN escuchando">
+                <div class="zenin-avatar-aura" aria-hidden="true"></div>
+                <div class="zenin-avatar-particles" aria-hidden="true"><i></i><i></i><i></i></div>
+                <div class="zenin-avatar-hologram" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div class="zenin-avatar-antenna" aria-hidden="true"><i></i></div>
+                <div class="zenin-avatar-head">
+                  <div class="zenin-avatar-face">
+                    <span class="zenin-eye zenin-eye--left"></span>
+                    <span class="zenin-eye zenin-eye--right"></span>
+                    <span class="zenin-mouth"></span>
+                  </div>
+                </div>
+                <div class="zenin-avatar-body">
+                  <span class="zenin-core"></span>
+                  <span class="zenin-arm zenin-arm--left"></span>
+                  <span class="zenin-arm zenin-arm--right"></span>
+                  <span class="zenin-foot zenin-foot--left"></span>
+                  <span class="zenin-foot zenin-foot--right"></span>
+                </div>
+              </div>
+              <div>
+                <strong>ZENIN</strong>
+                <span data-i18n="chat.status">Enfocada en bienestar emocional</span>
+              </div>
+              <span class="ai-spark"></span>
+            </div>
+            <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+            <form class="chat-form" id="chatForm">
+              <input
+                id="chatInput"
+                type="text"
+                required
+                autocomplete="off"
+                placeholder="Pregunta sobre estrés, sueño, respiración o ZENOVA..."
+                data-i18n-placeholder="chat.placeholder"
+              />
+              <button class="primary-action" type="submit" data-i18n="chat.send">Enviar</button>
+            </form>
+          </article>
+        </div>
+      </section>
+
+      <section class="visual-band app-runtime-section" aria-label="Identidad visual de ZENOVA">
+        <div class="visual-copy">
+          <img src="assets/logo-zenova.png" alt="Logo ZENOVA" />
+          <p>
+            <span data-i18n="visual.text">Tranquilidad, equilibrio emocional e innovación tecnológica en una experiencia accesible
+            y preventiva.
+            </span>
+          </p>
+        </div>
+      </section>
+
+      <section class="section-band app-runtime-section" id="valor" aria-labelledby="value-title">
+        <div class="section-shell value-layout">
+          <div>
+            <p class="eyebrow" data-i18n="value.eyebrow">Propuesta de valor</p>
+            <h2 id="value-title" data-i18n="value.title">Una sola plataforma para prevenir y controlar el estrés</h2>
+            <p data-i18n="value.text">
+              ZENOVA se diferencia porque no ofrece solo relajación general: identifica causas,
+              personaliza recursos, acompaña el seguimiento y adapta la experiencia al tipo de
+              estrés del usuario.
+            </p>
+            <div class="validation-strip" aria-label="Validación de mercado">
+              <div>
+                <strong>85%</strong>
+                <span data-i18n="value.approval">Aprobación proyectada</span>
+              </div>
+              <div>
+                <strong>65%</strong>
+                <span data-i18n="value.payment">Intención de pago</span>
+              </div>
+              <div>
+                <strong>S/15 - S/30</strong>
+                <span data-i18n="value.premium">Rango premium accesible</span>
+              </div>
+            </div>
+          </div>
+          <img class="summary-image" src="assets/zenova-summary.png" alt="Resumen visual de ZENOVA" />
+        </div>
+        <div class="section-shell vip-beta">
+          <article class="vip-card">
+            <p class="eyebrow">Fase beta</p>
+            <h3>Miembro VIP</h3>
+            <p>
+              Plan de pago pensado para desbloquear informes avanzados, rutinas premium, historial ampliado,
+              alarmas inteligentes y conexión futura con especialistas.
+            </p>
+            <div class="vip-price">S/15 - S/30 <span>mensual</span></div>
+            <button class="primary-action" id="vipOpenBtn" type="button">Quiero ser VIP</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="payment-screen" id="paymentScreen" aria-labelledby="payment-title">
+        <div class="payment-panel">
+          <button class="icon-button payment-close" id="paymentCloseBtn" type="button" aria-label="Cerrar">×</button>
+          <p class="eyebrow">Miembro VIP</p>
+          <h2 id="payment-title">Elige tu plan ZENOVA</h2>
+          <div class="plans-grid">
+            <article class="plan-card">
+              <h3>VIP Básico</h3>
+              <strong>S/15</strong>
+              <p>Rutinas premium, informes ampliados y calendario inteligente.</p>
+              <button class="primary-action full" type="button" data-plan="VIP Básico">Seleccionar</button>
+            </article>
+            <article class="plan-card featured">
+              <h3>VIP Balance</h3>
+              <strong>S/22</strong>
+              <p>Todo lo básico, juegos avanzados, historial extendido y ZENIN mejorado.</p>
+              <button class="primary-action full" type="button" data-plan="VIP Balance">Seleccionar</button>
+            </article>
+            <article class="plan-card">
+              <h3>VIP Plus</h3>
+              <strong>S/30</strong>
+              <p>Acceso completo, videollamadas futuras y monitoreo biométrico en fase beta.</p>
+              <button class="primary-action full" type="button" data-plan="VIP Plus">Seleccionar</button>
+            </article>
+          </div>
+          <form class="payment-form" id="paymentForm">
+            <input id="selectedPlan" type="text" readonly placeholder="Selecciona un plan" />
+            <div class="form-row">
+              <input type="text" placeholder="Nombre en la tarjeta" required />
+              <input type="text" placeholder="0000 0000 0000 0000" required />
+            </div>
+            <div class="form-row">
+              <input type="text" placeholder="MM/AA" required />
+              <input type="text" placeholder="CVV" required />
+            </div>
+            <button class="primary-action full" type="submit">Simular pago seguro</button>
+          </form>
+          <p class="payment-message" id="paymentMessage"></p>
+        </div>
+      </section>
+
+      <section class="safety-band app-runtime-section" aria-labelledby="safety-title">
+        <div class="section-shell">
+          <h2 id="safety-title" data-i18n="safety.title">Apoyo responsable</h2>
+          <p data-i18n="safety.text">
+            ZENOVA es un prototipo de bienestar y no reemplaza la atención psicológica profesional.
+            Si una persona siente riesgo de hacerse daño o está en una emergencia, debe contactar a
+            servicios de emergencia o apoyo especializado de su localidad.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" data-protected-shell hidden inert>
+      <span>ZENOVA</span>
+      <span data-i18n="footer.text">Gestión personalizada del estrés</span>
+    </footer>
+
+    <script src="services/zenin/zenin-service.js"></script>
+    <script src="services/zenin/zenin-cognitive-core.js"></script>
+    <script src="services/zenin/zenin-backend-client.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
